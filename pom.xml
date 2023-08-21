@@ -15,14 +15,18 @@
     </properties>
 
     <dependencies>
-        <!-- Outras dependências aqui -->
-
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>42.2.23</version> <!-- Versão compatível com Java 11 -->
         </dependency>
+
+        <dependency>
+            <groupId>org.mindrot</groupId>
+            <artifactId>jbcrypt</artifactId>
+            <version>0.4</version>
+        </dependency>
+
+        <!-- Outras dependências aqui -->
     </dependencies>
 </project>
-
-
