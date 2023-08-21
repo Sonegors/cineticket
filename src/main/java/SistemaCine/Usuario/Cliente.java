@@ -1,13 +1,12 @@
 package SistemaCine.Usuario;
 
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Scanner;
+import org.mindrot.jbcrypt.BCrypt;
 
 public class Cliente {
     private String username;
@@ -23,8 +22,7 @@ public class Cliente {
         int filmeId = scanner.nextInt();
         scanner.nextLine();
 
-        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://<hostname>:<port>/database", "username", "password")) {
-            // Verificar se o filme está em cartaz
+        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://containers-us-west-83.railway.app:7123/railway", "postgres", "TeEupmjFClfn7Ppvn1jk")) {
             String verificarFilmeQuery = "SELECT COUNT(*) FROM filmes WHERE id = ?";
             PreparedStatement verificarFilmeStatement = connection.prepareStatement(verificarFilmeQuery);
             verificarFilmeStatement.setInt(1, filmeId);
@@ -33,7 +31,6 @@ public class Cliente {
             int count = filmeResultSet.getInt(1);
 
             if (count > 0) {
-                // Registrar a compra do ingresso
                 String comprarIngressoQuery = "INSERT INTO ingressos (cliente_username, filme_id) VALUES (?, ?)";
                 PreparedStatement comprarIngressoStatement = connection.prepareStatement(comprarIngressoQuery);
                 comprarIngressoStatement.setString(1, username);
@@ -49,7 +46,7 @@ public class Cliente {
     }
 
     public void listarFilmesEmCartaz(int classificacaoIndicativa) {
-        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://<hostname>:<port>/database", "username", "password")) {
+        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://containers-us-west-83.railway.app:7123/railway", "postgres", "TeEupmjFClfn7Ppvn1jk")) {
             String listarFilmesQuery = "SELECT id, titulo, genero, idade_minima FROM filmes WHERE idade_minima <= ?";
             PreparedStatement listarFilmesStatement = connection.prepareStatement(listarFilmesQuery);
             listarFilmesStatement.setInt(1, classificacaoIndicativa);
@@ -73,7 +70,7 @@ public class Cliente {
     }
 
     public void visualizarIngressosComprados() {
-        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://<hostname>:<port>/database", "username", "password")) {
+        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://containers-us-west-83.railway.app:7123/railway", "postgres", "TeEupmjFClfn7Ppvn1jk")) {
             String visualizarIngressosQuery = "SELECT f.titulo FROM ingressos i " +
                     "JOIN filmes f ON i.filme_id = f.id " +
                     "WHERE i.cliente_username = ?";

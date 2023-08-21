@@ -15,7 +15,7 @@ public class ComprarIngresso {
     }
 
     public void listarFilmesEmCartaz(int classificacaoIndicativa) {
-        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://postgres:TeEupmjFClfn7Ppvn1jk@containers-us-west-83.railway.app:7123/railway", "postgres", "TeEupmjFClfn7Ppvn1jk")) {
+        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://containers-us-west-83.railway.app:7123/railway", "postgres", "TeEupmjFClfn7Ppvn1jk")) {
             String listarFilmesQuery = "SELECT id, titulo, genero, idade_minima FROM filmes WHERE idade_minima <= ?";
             PreparedStatement listarFilmesStatement = connection.prepareStatement(listarFilmesQuery);
             listarFilmesStatement.setInt(1, classificacaoIndicativa);
@@ -57,5 +57,5 @@ public class ComprarIngresso {
         }
     }
 
-    // ...
+    // ..
 }

@@ -36,7 +36,7 @@ public class Filme {
         int poltronasDisponiveis = scanner.nextInt();
         scanner.nextLine();
 
-        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://postgres:TeEupmjFClfn7Ppvn1jk@containers-us-west-83.railway.app:7123/railway", "postgres", "TeEupmjFClfn7Ppvn1jk")) {
+        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://containers-us-west-83.railway.app:7123/railway", "postgres", "TeEupmjFClfn7Ppvn1jk")) {
             String cadastrarFilmeQuery = "INSERT INTO filmes (titulo, genero, idade_minima, tempo, valor, tecnologia, poltronas_disponiveis) " +
                     "VALUES (?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement cadastrarFilmeStatement = connection.prepareStatement(cadastrarFilmeQuery);
