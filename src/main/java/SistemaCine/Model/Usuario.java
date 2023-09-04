@@ -1,17 +1,18 @@
-package SistemaCine.Menu;
+package SistemaCine.Model;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-
 import java.util.Scanner;
 import org.mindrot.jbcrypt.BCrypt;
 
-public class CadastroUsuario {
+public class Usuario {
     public static void cadastrarNovoUsuario() {
         Scanner scanner = new Scanner(System.in);
 
+
+        System.out.println("===== MENU CADASTRO USUARIO =====");
         System.out.print("Nome: ");
         String nome = scanner.nextLine();
 

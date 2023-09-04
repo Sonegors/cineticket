@@ -1,5 +1,4 @@
-package SistemaCine.Ingresso;
-
+package SistemaCine.Model;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,6 +10,7 @@ public class Filme {
     public static void cadastrarNovoFilme() {
         Scanner scanner = new Scanner(System.in);
 
+        System.out.println("===== CADASTRAR FILME =====");
         System.out.print("Título: ");
         String titulo = scanner.nextLine();
 
@@ -36,6 +36,10 @@ public class Filme {
         int poltronasDisponiveis = scanner.nextInt();
         scanner.nextLine();
 
+        cadastrarFilme(titulo, genero, idadeMinima, tempo, valor, tecnologia, poltronasDisponiveis);
+    }
+
+    public static void cadastrarFilme(String titulo, String genero, int idadeMinima, int tempo, double valor, String tecnologia, int poltronasDisponiveis) {
         try (Connection connection = DriverManager.getConnection("jdbc:postgresql://containers-us-west-83.railway.app:7123/railway", "postgres", "TeEupmjFClfn7Ppvn1jk")) {
             String cadastrarFilmeQuery = "INSERT INTO filmes (titulo, genero, idade_minima, tempo, valor, tecnologia, poltronas_disponiveis) " +
                     "VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -54,6 +58,4 @@ public class Filme {
             e.printStackTrace();
         }
     }
-
-    // ...
 }

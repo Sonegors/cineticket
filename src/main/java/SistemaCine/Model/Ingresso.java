@@ -1,48 +1,17 @@
-package SistemaCine.Usuario;
+package SistemaCine.Model;
+
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Scanner;
-import org.mindrot.jbcrypt.BCrypt;
 
-public class Cliente {
+public class Ingresso {
     private String username;
 
-    public Cliente(String username) {
+    public Ingresso(String username) {
         this.username = username;
-    }
-
-    public void comprarIngressos() {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.print("Informe o ID do filme: ");
-        int filmeId = scanner.nextInt();
-        scanner.nextLine();
-
-        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://containers-us-west-83.railway.app:7123/railway", "postgres", "TeEupmjFClfn7Ppvn1jk")) {
-            String verificarFilmeQuery = "SELECT COUNT(*) FROM filmes WHERE id = ?";
-            PreparedStatement verificarFilmeStatement = connection.prepareStatement(verificarFilmeQuery);
-            verificarFilmeStatement.setInt(1, filmeId);
-            ResultSet filmeResultSet = verificarFilmeStatement.executeQuery();
-            filmeResultSet.next();
-            int count = filmeResultSet.getInt(1);
-
-            if (count > 0) {
-                String comprarIngressoQuery = "INSERT INTO ingressos (cliente_username, filme_id) VALUES (?, ?)";
-                PreparedStatement comprarIngressoStatement = connection.prepareStatement(comprarIngressoQuery);
-                comprarIngressoStatement.setString(1, username);
-                comprarIngressoStatement.setInt(2, filmeId);
-                comprarIngressoStatement.executeUpdate();
-                System.out.println("Ingresso comprado com sucesso!");
-            } else {
-                System.out.println("Filme não encontrado.");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
     public void listarFilmesEmCartaz(int classificacaoIndicativa) {
@@ -70,7 +39,7 @@ public class Cliente {
     }
 
     public void visualizarIngressosComprados() {
-        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://containers-us-west-83.railway.app:7123/railway", "postgres", "TeEupmjFClfn7Ppvn1jk")) {
+        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://<hostname>:<port>/database", "username", "password")) {
             String visualizarIngressosQuery = "SELECT f.titulo FROM ingressos i " +
                     "JOIN filmes f ON i.filme_id = f.id " +
                     "WHERE i.cliente_username = ?";
@@ -88,5 +57,5 @@ public class Cliente {
         }
     }
 
-    // ...
+    // ..
 }
